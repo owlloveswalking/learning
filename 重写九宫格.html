@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>九宫格</title>
+	<style type="text/css">
+		#div1{
+			position: relative;
+			width: 420px;
+			height: 556px;
+			margin:50px auto;
+			background: #f6f6f6;
+		}
+		#div2{
+			width:100%;
+			position:relative;
+			left:20px;
+			top:20px; 
+		}
+		#div2 div{
+			width: 122px;
+			height:122px;
+			background:#fea600;
+			float: left;
+			margin-right: 10px;
+			margin-top: 10px;
+			border-radius:10px;
+		}
+		#btn{
+			position: absolute;
+			bottom: 10px;
+		}
+		#btn1{
+			width: 420px;
+			height:50px;
+			background:#fea600;
+			margin-top: 20px; 
+			border-radius:10px;
+			font-size: 16px;
+			text-align: center;
+			color: #fff;
+			line-height: 50px;
+			cursor: pointer;
+		}
+		#btn2{
+			width: 420px;
+			height: 50px;
+			background: #fff;
+			margin-top: 20px;
+			border: 1px solid #fea600;
+			border-radius:10px;
+            font-size: 16px;
+            color:#fea600;
+            line-height: 50px;
+            text-align: center;
+            cursor: pointer;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv2=document.getElementById('div2');
+			var aDiv=oDiv2.getElementsByTagName('div');
+			var oBtn1=document.getElementById('btn1');
+			var oBtn2=document.getElementById('btn2');
+
+			function hex(num){
+                   var x=0;
+                  
+                   	
+             if(num>16){
+             	var n=change(parseInt(num/16));
+                   	var o=change(num%16);
+                 function change(i){  	
+                    	switch(i){
+                    		case 10:
+                    		x='A'
+                    		break;
+                            
+                            case 11:
+                    		x='B'
+                    		break;
+
+                    		case 12:
+                    		x='C';
+                    		break;
+
+                    		case 13:
+                    		x='D'
+                    		break;
+
+                    		case 14:
+                    		x='E';
+                    		break;
+
+                    		case 15:
+                    		x='F';
+                    		break;
+
+                    		default:
+                            
+                            x=i.toString();
+                    	}
+
+                    	return x;
+                  }
+                  
+                  return n.toString()+o.toString();  	
+                  
+			}else{
+
+				  return '0'+num.toString();
+			}
+	}		
+
+			// console.log(hex(234));
+
+	        function rgbToHex(r,g,b){
+	        	var h=hex(r);
+	        	var e=hex(g);
+	        	var x=hex(b);
+
+	        	var oHex='#'+h+e+x;
+
+	        	return oHex;
+
+	        }
+            
+            function randomNum(num){   
+           	   do{ 
+           	     var arr=[]  
+           	     var p1=Math.floor(Math.random()*num);
+           	     arr.push(p1);
+           	     var p2=Math.floor(Math.random()*num);
+           	     arr.push(p2);
+           	     var p3=Math.floor(Math.random()*num);
+           	     arr.push(p3);
+           	   }while(p1==p2||p2==p3||p3==p1);
+
+           	   return arr;
+           } 
+            var timer=null;
+
+            function flash(){		
+				var aNum=randomNum(9);
+				var aPosition=[];
+             for(var i=0;i<aDiv.length;i++){
+
+             	for(var j=0;j<aNum.length;j++){
+
+             		if(i==aNum[j]){
+             			
+             			aPosition.push(aDiv[i]);
+             		}
+             	}
+            } 	
+
+             for(var i=0;i<aDiv.length;i++){
+
+             	aDiv[i].style['background']='#fea600';
+             }
+
+             for(var i=0;i<aPosition.length;i++){
+                    do{
+                     var aNum2=randomNum(256);
+                     var oHex=rgbToHex(aNum2[0],aNum2[1],aNum2[2]); 
+                     aPosition[i].style['background']=oHex;
+                     }while(oHex=='#fea600');
+                     console.log(oHex,aNum2);
+            }
+      }
+            
+			oBtn1.onclick=function(){
+            clearInterval(timer);
+
+            // flash();
+           timer=setInterval(flash,1000);
+
+        } 
+            
+		
+			oBtn2.onclick=function(){
+				clearInterval(timer);
+				for(var i=0;i<aDiv.length;i++){
+					aDiv[i].style.background='#fea600';
+				}
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<div id="div2">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	<div id="btn">
+		<div id="btn1">开始闪</div>
+		<div id="btn2">结束闪</div>
+	</div>		
+	</div>
+</body>
+</html>
